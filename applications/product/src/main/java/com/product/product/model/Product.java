@@ -44,11 +44,25 @@ public class Product {
         this.price = price;
     }
 
+    public Product(String name, String description, String image, double price) {
+        this.productId = productId;
+        this.name = name;
+        this.description = description;
+        this.image = image;
+        this.price = price;
+    }
+    public Product(){
+
+    }
+
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     @Column(name = "product_id")
     long productId;
     String name;
+
+
+
     String description;
     String image;
     double price;

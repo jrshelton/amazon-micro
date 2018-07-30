@@ -7,23 +7,29 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-public class Orders {
+@Table(name = "orders")
+public class Order {
 
     @Id
     @Column(name="order_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long orderId;
-
     private String orderNumber;
     private String orderDate;
     private double total;
     private long account;
-
     private long shippingAddress;
 
     @OneToMany
     @JoinColumn(name = "order_id")
     private Set<OrderLine> orderLineItems;
+
+    public Order(String orderNumber, String orderDate) {
+        this.orderNumber = orderNumber;
+        this.orderDate = orderDate;
+        this.shippingAddress = shippingAddress;
+    }
+    public Order(){}
 
     public void addLineItem(OrderLine item){
         orderLineItems.add(item);

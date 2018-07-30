@@ -1,6 +1,6 @@
 package com.order.order.controller;
 
-import com.order.order.model.Orders;
+import com.order.order.model.Order;
 import com.order.order.model.OrderLine;
 import com.order.order.repository.OrderLineRepository;
 import com.order.order.repository.OrderRepository;
@@ -31,7 +31,7 @@ public class OrderLineController {
         return orderLineRepository.save(orderLine);
     }
 
-    @RequestMapping("/{orderId}/lines/all")
+    @RequestMapping("/{orderId}/lines")
     public Iterable<OrderLine> findAll(@PathVariable("orderId") long orderId) {
         return orderLineRepository.findAllByOrder_OrderId(orderId);
     }
@@ -47,9 +47,9 @@ public class OrderLineController {
         orderLineRepository.deleteByOrderLineIdAndOrder_OrderId(id, orderId);
 
     }
-/*
+
     @PutMapping("/{orderId}/lines/{id}")
-    public OrderLine editById(@PathVariable("id") long id, @RequestBody OrderLine orderLineItem) {
+    public OrderLine editById(@PathVariable("orderId") long OrderId,  @PathVariable("id") long id, @RequestBody OrderLine orderLineItem) {
         Optional<OrderLine> orderLineItemOptional = orderLineRepository.findById(id);
         if (!orderLineItemOptional.isPresent()) {
             return null;
@@ -57,5 +57,5 @@ public class OrderLineController {
         orderLineItem.setOrderLineItemId(id);
         return orderLineRepository.save(orderLineItem);
 
-    }*/
+    }
 }

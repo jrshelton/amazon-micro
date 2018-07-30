@@ -12,6 +12,9 @@ public class Address {
     @Column(name = "address_id")
     long addressId;
     String street;
+
+
+
     String building;
     String state;
     int zip;
@@ -23,6 +26,14 @@ public class Address {
     @JsonBackReference
     private Account account;
 
+    public Address(String street, String building, String state, int zip, String country) {
+        this.street = street;
+        this.building = building;
+        this.state = state;
+        this.zip = zip;
+        this.country = country;
+    }
+    public Address(){}
     public long getAddressId() {
         return addressId;
     }

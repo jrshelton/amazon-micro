@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,7 +15,6 @@ public class Account {
     @Id
     @Column(name = "account_id")
     long accountId;
-
     private String firstName;
     private String lastName;
     private String emailAddress;
@@ -24,6 +24,15 @@ public class Account {
     //@JsonBackReference
     private List<Address> address;
 
+    public Account(){}
+
+    public Account(String firstName, String lastName, String emailAddress, Address address) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.emailAddress = emailAddress;
+        this.address =  new ArrayList<>();
+        this.address.add(address);
+    }
     public long getAccountId() {
         return accountId;
     }

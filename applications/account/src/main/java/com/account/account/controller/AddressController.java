@@ -11,7 +11,7 @@ import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/account")
+@RequestMapping("/accounts")
 public class AddressController {
 
     AccountRepository accountRepository;
@@ -33,7 +33,7 @@ public class AddressController {
         return addressRepository.save(address);
     }
 
-    @RequestMapping("/{accountId}/address/all")
+    @RequestMapping("/{accountId}/address")
     public Iterable<Address> findAll(@PathVariable("accountId") long accountId){
         return addressRepository.findAllByAccount(accountRepository.findById(accountId).get());
     }

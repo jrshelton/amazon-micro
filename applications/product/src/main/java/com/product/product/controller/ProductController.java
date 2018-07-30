@@ -14,9 +14,11 @@ public class ProductController {
 
 
     private ProductRepository productRepository;
-    public ProductController(ProductRepository productRepository){
+    public ProductController(ProductRepository productRepository)
+    {
         this.productRepository = productRepository;
     }
+
 
     @PostMapping("")
     public Product createProduct(@Valid @RequestBody Product product) {
@@ -24,7 +26,7 @@ public class ProductController {
         return productRepository.save(product);
     }
 
-    @RequestMapping("/all")
+    @RequestMapping("")
     public Iterable<Product> findAll() {
         return productRepository.findAll();
     }

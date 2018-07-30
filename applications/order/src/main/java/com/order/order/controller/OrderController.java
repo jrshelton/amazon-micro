@@ -1,6 +1,6 @@
 package com.order.order.controller;
 
-import com.order.order.model.Orders;
+import com.order.order.model.Order;
 import com.order.order.repository.OrderLineRepository;
 import com.order.order.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,29 +13,36 @@ import java.util.Optional;
 @RequestMapping("/orders")
 public class OrderController {
 
+
     private OrderRepository orderRepository;
     //private OrderLineRepository orderLineRepository;
 
     public OrderController( OrderRepository orderRepository){
-       // this.orderLineRepository = orderLineRepository;
         this.orderRepository = orderRepository;
 
     }
+    @PostMapping("/random")
+    public Order createRandomOrder() {
+        Order order = new Order();
+        order.setOrderDate("2018-06-05");
+        order.setTotal(234);
+        return orderRepository.save(order);
+    }
 
     @PostMapping("")
-    public Orders createOrder(@Valid @RequestBody Orders order) {
+    public Order createOrder(@Valid @RequestBody Order order) {
 
         return orderRepository.save(order);
     }
 
 
-    @RequestMapping("/all")
-    public Iterable<Orders> findAll() {
+    @RequestMapping("")
+    public Iterable<Order> findAll() {
         return orderRepository.findAll();
     }
 
     @RequestMapping("/{id}")
-    public Optional<Orders> findById(@PathVariable("id") long id) {
+    public Optional<Order> findById(@PathVariable("id") long id) {
 
         return orderRepository.findById(id);
     }
@@ -47,8 +54,8 @@ public class OrderController {
     }
 
     @PutMapping("/{id}")
-    public Orders editById(@PathVariable("id") long id, @RequestBody Orders order) {
-        Optional<Orders> orderOptional = orderRepository.findById(id);
+    public Order editById(@PathVariable("id") long id, @RequestBody Order order) {
+        Optional<Order> orderOptional = orderRepository.findById(id);
         if (!orderOptional.isPresent()) {
             return null;
         }
@@ -57,6 +64,10 @@ public class OrderController {
 
     }
 
+    @GetMapping("")
+    public Iterable<Order> getOrdersOfAccount(@RequestParam("accountId") long accountId){
+        return orderRepository.findAllByAccountOrderByOrderDate(accountId);
+    }
 
 
 }

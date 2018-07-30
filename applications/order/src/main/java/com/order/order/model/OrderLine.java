@@ -23,7 +23,9 @@ public class OrderLine {
     @ManyToOne
     @JoinColumn(name = "order_id")
     @JsonBackReference
-    private Orders order;
+    private Order order;
+
+    public OrderLine(){}
 
     public long getShipment(){
         return this.shipment;
@@ -68,11 +70,11 @@ public class OrderLine {
         this.shipment = shipment;
     }
 
-    public Orders getOrder() {
+    public Order getOrder() {
         return this.order;
     }
 
-    public void setOrder(Orders order) {
+    public void setOrder(Order order) {
         this.order = order;
     }
 
