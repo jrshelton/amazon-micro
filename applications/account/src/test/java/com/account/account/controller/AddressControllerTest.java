@@ -104,4 +104,12 @@ public class AddressControllerTest {
         mvc.perform(delete("/accounts/1/address/1"))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    public void testFindByIdWithoutAccount() throws Exception {
+        when(addressRepository.findById(anyLong())).thenReturn(java.util.Optional.of(new Address()));
+
+        mvc.perform(get("/accounts/address/1"))
+                .andExpect(status().isOk());
+    }
 }

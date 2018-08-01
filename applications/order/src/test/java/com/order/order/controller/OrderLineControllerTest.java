@@ -3,6 +3,7 @@ package com.order.order.controller;
 
 import com.order.order.SecurityConfig;
 import com.order.order.model.Order;
+import com.order.order.model.OrderLine;
 import com.order.order.repository.OrderLineRepository;
 import com.order.order.repository.OrderRepository;
 import org.junit.Before;
@@ -12,13 +13,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.client.RestTemplate;
 
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
@@ -40,6 +42,9 @@ public class OrderLineControllerTest {
     @Mock
     private OrderRepository orderRepository;
 
+    @Mock
+    private RestTemplate restTemplate;
+
     @InjectMocks
     private OrderLineController orderLineController;
 
@@ -48,19 +53,19 @@ public class OrderLineControllerTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        orderLineController = new OrderLineController(orderLineRepository, orderRepository);
+        orderLineController = new OrderLineController(orderLineRepository, orderRepository, restTemplate);
         this.mvc = MockMvcBuilders.standaloneSetup(orderLineController).build();
     }
 
     @Test
     public void testFindById() throws Exception {
-        Mockito.when(orderRepository.findById(any())).thenReturn(java.util.Optional.of(new Order()));
+        when(orderRepository.findById(any())).thenReturn(java.util.Optional.of(new Order()));
         mvc.perform(get("/orders/1/lines/1")).andExpect(status().isOk());
     }
 
     @Test
     public void testFindAll() throws Exception {
-        Mockito.when(orderRepository.findById(any())).thenReturn(java.util.Optional.of(new Order()));
+        when(orderRepository.findById(any())).thenReturn(java.util.Optional.of(new Order()));
         mvc.perform(get("/orders/1/lines")).andExpect((status().isOk()));
     }
 
@@ -70,14 +75,14 @@ public class OrderLineControllerTest {
                 "\"quantity\": 4," +
                 " \"price\": 10.99 " +
                 "}";
-        Mockito.when(orderRepository.findById(any())).thenReturn(java.util.Optional.of(new Order()));
+        when(orderRepository.findById(any())).thenReturn(java.util.Optional.of(new Order()));
         mvc.perform(post("/orders/1/lines").contentType(MediaType.APPLICATION_JSON).content(json))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void testDeleteProduct() throws Exception {
-        Mockito.when(orderRepository.findById(any())).thenReturn(java.util.Optional.of(new Order()));
+        when(orderRepository.findById(any())).thenReturn(java.util.Optional.of(new Order()));
         mvc.perform(delete("/orders/1/lines")).andExpect((status().isOk()));
     }
 
@@ -87,11 +92,13 @@ public class OrderLineControllerTest {
                 "\"quantity\": 4," +
                 " \"price\": 10.99 " +
                 "}";
-        Mockito.when(orderRepository.findById(any())).thenReturn(java.util.Optional.of(new Order()));
+        when(orderRepository.findById(any())).thenReturn(java.util.Optional.of(new Order()));
         mvc.perform(put("/orders/1/lines/1").contentType(MediaType.APPLICATION_JSON).content(json))
                 .andExpect((status().isOk()));
 
     }
+
+
 
 }
 

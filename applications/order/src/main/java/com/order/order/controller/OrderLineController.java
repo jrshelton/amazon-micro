@@ -1,14 +1,12 @@
 package com.order.order.controller;
 
-import com.order.order.model.Order;
 import com.order.order.model.OrderLine;
 import com.order.order.repository.OrderLineRepository;
 import com.order.order.repository.OrderRepository;
 
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
-import javax.validation.Valid;
-import javax.ws.rs.Path;
 import java.util.Optional;
 
 
@@ -18,11 +16,13 @@ public class OrderLineController {
 
     private OrderLineRepository orderLineRepository;
     private OrderRepository orderRepository;
+    private RestTemplate restTemplate;
 
 
-    public OrderLineController(OrderLineRepository orderLineRepository, OrderRepository orderRepository) {
+    public OrderLineController(OrderLineRepository orderLineRepository, OrderRepository orderRepository, RestTemplate restTemplate) {
         this.orderLineRepository = orderLineRepository;
         this.orderRepository = orderRepository;
+        this.restTemplate = restTemplate;
     }
 
     @PostMapping("/{orderId}/lines")
@@ -45,7 +45,6 @@ public class OrderLineController {
     @DeleteMapping("/{orderId}/lines/{id}")
     public void deleteById(@PathVariable("orderId") long orderId, @PathVariable("id") long id) {
         orderLineRepository.deleteByOrderLineIdAndOrder_OrderId(id, orderId);
-
     }
 
     @PutMapping("/{orderId}/lines/{id}")
@@ -57,5 +56,11 @@ public class OrderLineController {
         orderLineItem.setOrderLineItemId(id);
         return orderLineRepository.save(orderLineItem);
 
+    }
+
+    @RequestMapping("/lines/{id}")
+    public OrderLine getOrderLineById(@PathVariable("id") long id){
+
+        return orderLineRepository.findById(id).get();
     }
 }

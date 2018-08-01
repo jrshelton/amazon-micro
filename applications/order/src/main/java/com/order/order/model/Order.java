@@ -1,7 +1,6 @@
 package com.order.order.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+import com.order.order.tempModels.LineItemDesplay;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -24,11 +23,7 @@ public class Order {
     @JoinColumn(name = "order_id")
     private Set<OrderLine> orderLineItems;
 
-    public Order(String orderNumber, String orderDate) {
-        this.orderNumber = orderNumber;
-        this.orderDate = orderDate;
-        this.shippingAddress = shippingAddress;
-    }
+
     public Order(){}
 
     public void addLineItem(OrderLine item){

@@ -60,9 +60,6 @@ public class Product {
     @Column(name = "product_id")
     long productId;
     String name;
-
-
-
     String description;
     String image;
     double price;

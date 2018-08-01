@@ -25,32 +25,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration(classes = {SecurityConfig.class})
 public class AccountApplicationTests {
 
-
-    @Mock
-    private AccountRepository accountRepository;
-
-    @InjectMocks
-    private AccountController accountController;
-
-    private MockMvc mockMvc;
-
-    @Before
-    public void before(){
-        MockitoAnnotations.initMocks(this);
-        this.mockMvc = MockMvcBuilders.standaloneSetup(accountController).build();
-    }
-
-    @Test
-    public void testCreateAccount() throws Exception {
-        String json = "{ \"firstName\": \"Jack\"," +
-                " \"lastName\": \"Shelton\"," +
-                " \"emailAddress\": \"jshelton@solsitice.com\" }";
-
-        mockMvc.perform(post("/accounts").contentType(MediaType.APPLICATION_JSON).content(json))
-                .andExpect(status().isCreated())
-                .andDo(print());
-    }
-
     @Test
     public void contextLoads() {
     }

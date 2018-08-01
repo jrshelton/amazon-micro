@@ -1,13 +1,18 @@
 package com.order.order.controller;
 
 import com.order.order.model.Order;
-import com.order.order.repository.OrderLineRepository;
+import com.order.order.model.OrderLine;
+import com.order.order.tempModels.*;
 import com.order.order.repository.OrderRepository;
+import com.order.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/orders")
@@ -15,19 +20,18 @@ public class OrderController {
 
 
     private OrderRepository orderRepository;
-    //private OrderLineRepository orderLineRepository;
+    private OrderService orderService;
 
-    public OrderController( OrderRepository orderRepository){
+    @Autowired
+    private  RestTemplate restTemplate;
+
+
+    public OrderController(OrderRepository orderRepository, OrderService orderService){
         this.orderRepository = orderRepository;
+        this.orderService  = orderService;
 
     }
-    @PostMapping("/random")
-    public Order createRandomOrder() {
-        Order order = new Order();
-        order.setOrderDate("2018-06-05");
-        order.setTotal(234);
-        return orderRepository.save(order);
-    }
+
 
     @PostMapping("")
     public Order createOrder(@Valid @RequestBody Order order) {
@@ -36,16 +40,11 @@ public class OrderController {
     }
 
 
-    @RequestMapping("")
+    @RequestMapping("/all")
     public Iterable<Order> findAll() {
         return orderRepository.findAll();
     }
 
-    @RequestMapping("/{id}")
-    public Optional<Order> findById(@PathVariable("id") long id) {
-
-        return orderRepository.findById(id);
-    }
 
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable("id") long id) {
@@ -68,6 +67,44 @@ public class OrderController {
     public Iterable<Order> getOrdersOfAccount(@RequestParam("accountId") long accountId){
         return orderRepository.findAllByAccountOrderByOrderDate(accountId);
     }
+
+    @GetMapping("/{id}")
+    public OrderDetails getOrderDetails(@PathVariable("id") long id){
+
+        return orderService.getOrderDetails(id );
+
+    }
+/*
+    @RequestMapping("/shipments/{id}")
+    public Shipment getShipment(@PathVariable("id")long id){
+        return orderService.getShipment(id);
+    }
+    @RequestMapping("/products/{id}")
+    public Product getProduct(@PathVariable("id")long id){
+        return orderService.getProduct(id);
+    }
+
+    @RequestMapping("/address/{id}")
+    public Address getAddress(@PathVariable("id")long id){
+        return orderService.getAddress(id);
+    }
+    //@RequestMapping("/{id}")
+    public Optional<Order> findById(@PathVariable("id") long id) {
+
+        return orderRepository.findById(id);
+    }
+
+      @PostMapping("/random")
+    public Order createRandomOrder() {
+        Order order = new Order();
+        order.setOrderDate("2018-06-05");
+        order.setTotal(234);
+        return orderRepository.save(order);
+    }
+
+*/
+
+
 
 
 }

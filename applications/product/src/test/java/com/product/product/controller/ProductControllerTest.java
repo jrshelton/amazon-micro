@@ -50,12 +50,12 @@ public class ProductControllerTest {
     @Test
     public void testFindById() throws Exception {
         //Mockito.when(productRepository.findById(any())).thenReturn(java.util.Optional.of(new Product()));
-        mvc.perform(get("/product/1")).andExpect(status().isOk());
+        mvc.perform(get("/products/1")).andExpect(status().isOk());
     }
 
     @Test
     public void testFindAll() throws Exception {
-        mvc.perform(get("/product")).andExpect((status().isOk()));
+        mvc.perform(get("/products")).andExpect((status().isOk()));
     }
 
     @Test
@@ -66,13 +66,13 @@ public class ProductControllerTest {
                 "\"image\": \"test\"," +
                 "\"price\": 10 "+
                  "}";
-        mvc.perform(post("/product").contentType(MediaType.APPLICATION_JSON).content(json))
+        mvc.perform(post("/products").contentType(MediaType.APPLICATION_JSON).content(json))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void testDeleteProduct() throws Exception {
-        mvc.perform(delete("/product/1")).andExpect((status().isOk()));
+        mvc.perform(delete("/products/1")).andExpect((status().isOk()));
     }
 
     @Test
@@ -83,7 +83,7 @@ public class ProductControllerTest {
                 "\"image\": \"test\"," +
                 "\"price\": 10 "+
                 "}";
-        mvc.perform(put("/product/1").contentType(MediaType.APPLICATION_JSON).content(json))
+        mvc.perform(put("/products/1").contentType(MediaType.APPLICATION_JSON).content(json))
                 .andExpect((status().isOk()));
 
     }

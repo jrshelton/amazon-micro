@@ -3,25 +3,23 @@ package com.order.order.controller;
 
 import com.order.order.SecurityConfig;
 import com.order.order.repository.OrderRepository;
+import com.order.order.service.OrderService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.client.RestTemplate;
 
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
     @RunWith(SpringRunner.class)
@@ -32,7 +30,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         private MockMvc mvc;
 
         @Mock
-        private OrderRepository orderRepositoy;
+        private OrderRepository orderRepository;
+        @Mock
+        private OrderService orderService;
+        //@Mock
+        //private RestTemplate restTemplate;
 
         @InjectMocks
         private OrderController orderController;
@@ -42,7 +44,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         @Before
         public void setup() {
             MockitoAnnotations.initMocks(this);
-            orderController = new OrderController(orderRepositoy);
+            orderController = new OrderController(orderRepository, orderService);
             this.mvc = MockMvcBuilders.standaloneSetup(orderController).build();
         }
 
@@ -54,7 +56,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
         @Test
         public void testFindAll() throws Exception {
-            mvc.perform(get("/orders")).andExpect((status().isOk()));
+            mvc.perform(get("/orders/all")).andExpect((status().isOk()));
         }
 
         @Test
@@ -83,6 +85,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
                     .andExpect((status().isOk()));
 
         }
+
+        @Test
+        public void testGetOrderOfAccounts() throws Exception {
+            mvc.perform(get("/orders?accountId=1")).andExpect(status().isOk());
+        }
+
+
 
     }
 

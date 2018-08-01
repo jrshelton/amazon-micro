@@ -19,8 +19,6 @@ public class AddressController {
     AddressRepository addressRepository;
 
 
-
-    @Autowired
     public AddressController(AddressRepository addressRepository, AccountRepository accountRepository){
         this.addressRepository = addressRepository;
         this.accountRepository = accountRepository;
@@ -38,12 +36,16 @@ public class AddressController {
         return addressRepository.findAllByAccount(accountRepository.findById(accountId).get());
     }
 
+
     @RequestMapping("/{accountId}/address/{id}")
-    public Address findByID(@PathVariable("accountId") long accountId, @PathVariable("id") long id){
+    public Address findByIDAndAccount(@PathVariable("accountId") long accountId, @PathVariable("id") long id){
         return addressRepository.findByAddressIdAndAccount_AccountId(id, accountId);
     }
 
-
+    @RequestMapping("/address/{id}")
+    public Address findByID( @PathVariable("id") long id){
+        return addressRepository.findById(id).get();
+    }
 
     @DeleteMapping("/{accountId}/address/{id}")
     public void deleteById(@PathVariable("accountId") long accountId,@PathVariable("id") long id){

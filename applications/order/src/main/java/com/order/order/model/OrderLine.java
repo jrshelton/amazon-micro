@@ -1,6 +1,7 @@
 package com.order.order.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
@@ -19,6 +20,7 @@ public class OrderLine {
 
     long product;
     long shipment;
+    private long orderIds;
 
     @ManyToOne
     @JoinColumn(name = "order_id")
@@ -30,6 +32,12 @@ public class OrderLine {
     public long getShipment(){
         return this.shipment;
 
+    }
+    public void setOrderIds(long id){
+        order.getOrderId();
+    }
+    public long getOrderIds(){
+        return order.getOrderId();
     }
 
     public int getQuantity() {

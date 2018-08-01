@@ -12,9 +12,6 @@ public class Address {
     @Column(name = "address_id")
     long addressId;
     String street;
-
-
-
     String building;
     String state;
     int zip;

@@ -59,12 +59,12 @@ public class AccountControllerTest {
 
     @Test
     public void testFindById() throws Exception {
-        mvc.perform(get("/account/1")).andExpect(status().isOk());
+        mvc.perform(get("/accounts/1")).andExpect(status().isOk());
     }
 
     @Test
     public void testFindAll() throws Exception {
-        mvc.perform(get("/account/all")).andExpect(status().isOk());
+        mvc.perform(get("/accounts/all")).andExpect(status().isOk());
     }
 
     @Test
@@ -73,7 +73,7 @@ public class AccountControllerTest {
                 " \"lastName\": \"Shelton\"," +
                 " \"emailAddress\": \"test@solstice.com\" }";
 
-        mvc.perform(post("/account")
+        mvc.perform(post("/accounts")
                 .contentType(MediaType.APPLICATION_JSON_VALUE).content(json))
                 .andExpect(status().isOk());
 
@@ -81,7 +81,7 @@ public class AccountControllerTest {
 
     @Test
     public void testGetAccounts() throws Exception {
-        mvc.perform(get("/account/all"))
+        mvc.perform(get("/accounts/all"))
                 .andExpect(status().isOk())
                 .andDo(print());
     }
@@ -91,14 +91,14 @@ public class AccountControllerTest {
         when(accountRepository.save(any())).thenReturn(new Account());
         when(accountRepository.findById(anyLong())).thenReturn(java.util.Optional.of(new Account()));
 
-        mvc.perform(put("/account/1"))
+        mvc.perform(put("/accounts/1"))
                 .andExpect(status().isOk())
                 .andDo(print());
     }
 
     @Test
     public void testDeleteAccount() throws Exception {
-        mvc.perform(delete("/account/1"))
+        mvc.perform(delete("/accounts/1"))
                 .andExpect(status().isOk())
                 .andDo(print());
     }
