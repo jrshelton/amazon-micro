@@ -26,7 +26,7 @@ public class ProductController {
         return productRepository.save(product);
     }
 
-    @RequestMapping("")
+    @RequestMapping("/all")
     public Iterable<Product> findAll() {
         return productRepository.findAll();
     }

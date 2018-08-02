@@ -66,7 +66,7 @@ public class OrderLineControllerTest {
     @Test
     public void testFindAll() throws Exception {
         when(orderRepository.findById(any())).thenReturn(java.util.Optional.of(new Order()));
-        mvc.perform(get("/orders/1/lines")).andExpect((status().isOk()));
+        mvc.perform(get("/orders/1/lines/all")).andExpect((status().isOk()));
     }
 
     @Test

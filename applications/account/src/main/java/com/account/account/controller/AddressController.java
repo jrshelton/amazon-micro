@@ -31,7 +31,7 @@ public class AddressController {
         return addressRepository.save(address);
     }
 
-    @RequestMapping("/{accountId}/address")
+    @RequestMapping("/{accountId}/address/all")
     public Iterable<Address> findAll(@PathVariable("accountId") long accountId){
         return addressRepository.findAllByAccount(accountRepository.findById(accountId).get());
     }

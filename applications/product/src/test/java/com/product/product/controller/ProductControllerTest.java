@@ -55,7 +55,7 @@ public class ProductControllerTest {
 
     @Test
     public void testFindAll() throws Exception {
-        mvc.perform(get("/products")).andExpect((status().isOk()));
+        mvc.perform(get("/products/all")).andExpect((status().isOk()));
     }
 
     @Test

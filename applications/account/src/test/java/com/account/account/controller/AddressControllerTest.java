@@ -75,7 +75,7 @@ public class AddressControllerTest {
     @Test
     public void testFindAll() throws Exception {
         when(accountRepository.findById(anyLong())).thenReturn(java.util.Optional.of(new Account()));
-        mvc.perform(get("/accounts/1/address")).andExpect(status().isOk());
+        mvc.perform(get("/accounts/1/address/all")).andExpect(status().isOk());
     }
 
     @Test

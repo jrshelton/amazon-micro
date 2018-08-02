@@ -31,7 +31,7 @@ public class OrderLineController {
         return orderLineRepository.save(orderLine);
     }
 
-    @RequestMapping("/{orderId}/lines")
+    @RequestMapping("/{orderId}/lines/all")
     public Iterable<OrderLine> findAll(@PathVariable("orderId") long orderId) {
         return orderLineRepository.findAllByOrder_OrderId(orderId);
     }

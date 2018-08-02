@@ -1,13 +1,10 @@
 package com.order.order.controller;
 
 import com.order.order.model.Order;
-import com.order.order.model.OrderLine;
 import com.order.order.tempModels.*;
 import com.order.order.repository.OrderRepository;
 import com.order.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -22,8 +19,6 @@ public class OrderController {
     private OrderRepository orderRepository;
     private OrderService orderService;
 
-    @Autowired
-    private  RestTemplate restTemplate;
 
 
     public OrderController(OrderRepository orderRepository, OrderService orderService){
@@ -69,11 +64,12 @@ public class OrderController {
     }
 
     @GetMapping("/{id}")
-    public OrderDetails getOrderDetails(@PathVariable("id") long id){
+    public List<OrderDetails> getOrderDetails(@PathVariable("id") long id){
 
         return orderService.getOrderDetails(id );
 
     }
+
 /*
     @RequestMapping("/shipments/{id}")
     public Shipment getShipment(@PathVariable("id")long id){

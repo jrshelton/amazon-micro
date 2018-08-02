@@ -28,7 +28,7 @@ public class ShipmentController {
         return shipmentRepository.save(shipment);
     }
 
-    @RequestMapping("/")
+    @RequestMapping("/all")
     public Iterable<Shipment> findAll() {
         return shipmentRepository.findAll();
     }

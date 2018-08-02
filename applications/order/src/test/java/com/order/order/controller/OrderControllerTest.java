@@ -33,8 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         private OrderRepository orderRepository;
         @Mock
         private OrderService orderService;
-        //@Mock
-        //private RestTemplate restTemplate;
+
 
         @InjectMocks
         private OrderController orderController;

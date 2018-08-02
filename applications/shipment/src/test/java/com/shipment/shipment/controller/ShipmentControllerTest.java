@@ -56,7 +56,7 @@ public class ShipmentControllerTest {
 
     @Test
     public void testFindAll() throws Exception {
-        mvc.perform(get("/shipments/")).andExpect((status().isOk()));
+        mvc.perform(get("/shipments/all")).andExpect((status().isOk()));
     }
 
     @Test
