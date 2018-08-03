@@ -14,31 +14,19 @@ public class ShipmentService {
 
     private RestTemplate restTemplate;
     private ShipmentRepository shipmentRepository;
+    private ProductService productService;
+    private OrderLineService orderLineService;
+    private OrderService orderService;
+    private AddressService addressService;
 
-    public ShipmentService(RestTemplate restTemplate, ShipmentRepository shipmentRepository){
+
+    public ShipmentService(RestTemplate restTemplate, ShipmentRepository shipmentRepository, ProductService productService, OrderLineService orderLineService, OrderService orderService, AddressService addressService){
         this.restTemplate = restTemplate;
         this.shipmentRepository = shipmentRepository;
-    }
-
-
-    public OrderLine getOrderLine(long id){
-        return restTemplate.getForObject("http://order/orders/lines/" + id, OrderLine.class);
-    }
-
-    public Product getProduct(long id){
-        return restTemplate.getForObject("http://product/products/" + id, Product.class);
-    }
-
-    public Order getOrder(long id){
-        return restTemplate.getForObject("http://order/orders/" + id, Order.class);
-    }
-
-    public List<Order> getOrderByAccountId(long id){
-        return restTemplate.getForObject("http://order/orders?accountId=" + id, List.class);
-    }
-
-    public Address getShippingAddress(long id){
-        return restTemplate.getForObject("http://account/accounts/address/" + id, Address.class);
+        this.productService = productService;
+        this.orderLineService = orderLineService;
+        this.orderService = orderService;
+        this.addressService = addressService;
     }
 
     public List<ShipmentDisplay> getShipmentDisplay(long id){
@@ -48,11 +36,11 @@ public class ShipmentService {
         for(Shipment shipment : shipments){
             ShipmentDisplay shipmentDisplay = new ShipmentDisplay();
             if(shipment.getOrderLine().length>0) {
-                OrderLine orderLine = getOrderLine(shipment.getOrderLine()[0]);
+                OrderLine orderLine = orderLineService.getOrderLine(shipment.getOrderLine()[0]);
 
             //get order number
                 if(orderLine.getOrderIds()!=0){
-                    Order order = getOrder(orderLine.getOrderIds());
+                    Order order = orderService.getOrder(orderLine.getOrderIds());
                     shipmentDisplay.setOrderNumber(order.getOrderNumber());
                 }
             }
@@ -60,21 +48,21 @@ public class ShipmentService {
             shipmentDisplay.setShipmentDate(shipment.getShippedDate().toString());
             shipmentDisplay.setDeliveryDate(shipment.getDeliveryDate().toString());
             if(shipment.getShippingAddress()!=0) {
-                shipmentDisplay.setShippingAddress(getShippingAddress(shipment.getShippingAddress()));
+                shipmentDisplay.setShippingAddress(addressService.getShippingAddress(shipment.getShippingAddress()));
             }
             List<OrderLineDisplay> lineDisplays = new ArrayList<>();
 
             for(int i = 0; i<shipment.getOrderLine().length; i++) {
                 OrderLine orderLine;
                 if(shipment.getOrderLine()[i]!=0){
-                    orderLine = getOrderLine(shipment.getOrderLine()[i]);
+                    orderLine = orderLineService.getOrderLine(shipment.getOrderLine()[i]);
                 }else{
                     orderLine = new OrderLine();
                 }
 
                 Product product;
                 if(orderLine.getProduct() != 0) {
-                    product = getProduct(orderLine.getProduct());
+                    product = productService.getProduct(orderLine.getProduct());
                 }else {
                     product = new Product();
                 }
