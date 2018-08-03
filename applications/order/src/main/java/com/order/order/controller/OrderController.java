@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
+import javax.ws.rs.Path;
 import java.util.*;
 
 @RestController
@@ -40,6 +41,12 @@ public class OrderController {
         return orderRepository.findAll();
     }
 
+    @RequestMapping("/{id}")
+    public Optional<Order> findById(@PathVariable("id")long id)
+    {
+        return orderRepository.findById(id);
+    }
+
 
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable("id") long id) {
@@ -63,8 +70,8 @@ public class OrderController {
         return orderRepository.findAllByAccountOrderByOrderDate(accountId);
     }
 
-    @GetMapping("/{id}")
-    public List<OrderDetails> getOrderDetails(@PathVariable("id") long id){
+    @GetMapping("/info")
+    public List<OrderDetails> getOrderDetails(@RequestParam("accountId") long id){
 
         return orderService.getOrderDetails(id );
 

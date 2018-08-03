@@ -1,6 +1,7 @@
 package com.order.order.service;
 
-import com.order.order.tempModels.Shipment;
+import com.order.order.service.AddressService;
+import com.order.order.tempModels.Address;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,31 +11,28 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
 import static org.junit.Assert.assertEquals;
 
+
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
-public class ShipmentServiceTest {
+public class AddressServiceTest {
 
     @InjectMocks
-    private ShipmentService shipmentService;
+    private AddressService addressService;
 
     @Mock
     private RestTemplate restTemplate;
 
     @Before
     public void setUp(){
-        shipmentService = new ShipmentService(restTemplate);
+        addressService = new AddressService(restTemplate);
     }
-
     @Test
-    public void testGetShipment(){
-        Shipment shipment = new Shipment();
-        when(restTemplate.getForObject("http://shipment/shipments/" + 1, Shipment.class)).thenReturn(shipment);
+    public void testGetAddress(){
+        Address address = new Address();
+        when(restTemplate.getForObject("http://account/accounts/address/" + 1, Address.class)).thenReturn(address);
 
-        assertEquals(shipment, shipmentService.getShipment((long)1));
+        assertEquals(address, addressService.getAddress((long)1));
     }
-
-
-
 
 }

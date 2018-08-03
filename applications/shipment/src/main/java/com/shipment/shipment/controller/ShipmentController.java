@@ -59,27 +59,5 @@ public class ShipmentController {
     public List<ShipmentDisplay> showShipmentDisplay(@RequestParam("accountId")long id){
         return shipmentService.getShipmentDisplay(id);
     }
-    @GetMapping("/pro/{id}")
-    public Address showSshipmentDisplay(@PathVariable("id")long id){
-        return shipmentService.getShippingAddress(id);
-    }
-/*
-    @GetMapping("/pro/{id}")
-    public Product showSshipmentDisplay(@PathVariable("id")long id){
-        return shipmentService.getProduct(id);
-    }
-    @GetMapping("/ol/{id}")
-    public OrderLine showdShipmentDisplay(@PathVariable("id")long id){
-        return shipmentService.getOrderLine(id);
-    }
-    @GetMapping("/order/{id}")
-    public Order showdSsdntDisplay(@PathVariable("id")long id){
-        return shipmentService.getOrder(id);
-    }
 
-    @GetMapping("/account/{id}")
-    public Iterable<Shipment> showdDisplay(@PathVariable("id")long id){
-        return shipmentRepository.findAllByAccount(id);
-    }
-*/
 }

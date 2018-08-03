@@ -11,7 +11,6 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableCircuitBreaker
-
 public class ShipmentApplication {
 
     public static void main(String[] args) {

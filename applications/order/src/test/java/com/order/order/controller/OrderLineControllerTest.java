@@ -83,7 +83,7 @@ public class OrderLineControllerTest {
     @Test
     public void testDeleteProduct() throws Exception {
         when(orderRepository.findById(any())).thenReturn(java.util.Optional.of(new Order()));
-        mvc.perform(delete("/orders/1/lines")).andExpect((status().isOk()));
+        mvc.perform(delete("/orders/1/lines/1")).andExpect((status().isOk()));
     }
 
     @Test
