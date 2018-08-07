@@ -19,7 +19,9 @@ public class AddressService {
     }
 
     public Address getAddressFallBack(long id){
-        return new Address();
+        Address address = new Address();
+        address.setCountry("AMERICA");
+        return address;
     }
 
 
